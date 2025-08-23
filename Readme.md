@@ -1,6 +1,7 @@
 # backend
 
 - npm init -y
+- npm i nodemon -D
 
 # frontend
 
