@@ -9,6 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/1-DARK/Spotify_Clone.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
