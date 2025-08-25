@@ -6,3 +6,5 @@
 # frontend
 
 - npm create vite@latest .
+  For Clerk
+- npm install @clerk/clerk-react
