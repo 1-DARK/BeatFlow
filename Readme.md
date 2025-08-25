@@ -8,3 +8,4 @@
 - npm create vite@latest .
   For Clerk
 - npm install @clerk/clerk-react
+- npm i cloudinary cors @clerk/express
