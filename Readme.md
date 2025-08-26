@@ -3,6 +3,7 @@
 - npm init -y
 - npm i nodemon -D
 - clerk middleware https://clerk.com/docs/references/express/overview
+- npm i express-fileupload // use for uploading files
 
 # frontend
 
