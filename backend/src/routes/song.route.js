@@ -1,8 +1,7 @@
 import { Router } from "express";
+import { getAllSongs } from "../controller/song.controller.js";
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("song");
-});
+router.get("/", getAllSongs);
 
 export default router;
