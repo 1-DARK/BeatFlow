@@ -6,12 +6,26 @@ const MainLayout = () => {
   return (
     <div className="h-screen bg-black text-white flex flex-col">
       <ResizablePanelGroup>
+        {/*Left Sidebar */}
         <ResizablePanel
           defaultSize={20}
           minSize={isMobile ? 0 : 10}
           maxSize={30}
         >
           Left Sidebar
+        </ResizablePanel>
+        {/*Main Content */}
+        <ResizablePanel defaultSize={isMobile ? 80 : 60}>
+          <Outlet />
+        </ResizablePanel>
+        {/*Right Sidebar */}
+        <ResizablePanel
+          defaultSize={20}
+          minSize={0}
+          maxSize={25}
+          collapsedSize={0}
+        >
+          Friends Activity Component
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
