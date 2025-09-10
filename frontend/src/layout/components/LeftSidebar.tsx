@@ -1,7 +1,8 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignedIn } from "@clerk/clerk-react";
-import { HomeIcon, MessageCircle } from "lucide-react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { HomeIcon, Library, MessageCircle } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -41,6 +42,15 @@ const LeftSidebar = () => {
         </div>
       </div>
       {/* Library */}
+      <div className="flex-1 rounded-lg bg-zinc-900 p-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center text-white px-2">
+            <Library className="size-5 mr-2" />
+            <span className="hidden md:inline"> Playlists</span>
+          </div>
+        </div>
+        <ScrollArea></ScrollArea>
+      </div>
     </div>
   );
 };
