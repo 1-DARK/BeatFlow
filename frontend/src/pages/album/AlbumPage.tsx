@@ -1,10 +1,14 @@
+import { useMusicStore } from "@/store/useMusicStore";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const AlbumPage = () => {
   const { albumId } = useParams();
-  console.log(params);
-  useEffect(() => {}, []);
+  const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
+  useEffect(() => {
+    if (albumId) fetchAlbumById(albumId);
+  }, [fetchAlbumById, albumId]);
+  if (isLoading) return null;
   return <div>hi</div>;
 };
 
