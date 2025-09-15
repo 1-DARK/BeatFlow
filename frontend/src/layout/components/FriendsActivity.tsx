@@ -8,10 +8,12 @@ import { useEffect } from "react";
 const FriendsActivity = () => {
   const { users, fetchUsers } = useChatStore();
   const { user } = useUser();
-  const isPlaying = true;
+  const isPlaying = false;
+
   useEffect(() => {
     if (user) fetchUsers();
   }, [fetchUsers, user]);
+
   return (
     <div className="h-full bg-zinc-900 rounded-lg flex flex-col">
       <div className="p-4 flex justify-between items-center border-b border-zinc-800">
@@ -31,36 +33,37 @@ const FriendsActivity = () => {
               <div className="flex items-start gap-3">
                 <div className="relative">
                   <Avatar className="size-10 border border-zinc-800">
-                    <AvatarImage src={user.imageUrl} alt={user.fullName}>
-                      <AvatarFallback>{user.fullName[0]}</AvatarFallback>
-                    </AvatarImage>
+                    {/* Fixed: AvatarFallback is now a sibling of AvatarImage, not a child */}
+                    <AvatarImage src={user.imageUrl} alt={user.fullName} />
+                    <AvatarFallback>{user.fullName[0]}</AvatarFallback>
                   </Avatar>
                   <div
                     className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-zinc-900 bg-zinc-500`}
                     aria-hidden="true"
                   ></div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm text-white">
-                        {user.fullName}
-                      </span>
-                      {isPlaying && (
-                        <Music className="size-3.5 text-emerald-400 shrink-0" />
-                      )}
-                    </div>
-                    {isPlaying ? (
-                      <div className="mt-1">
-                        <div className="mt-1 text-sm text-white font-medium truncate">
-                          Cardigan
-                        </div>
-                        <div className="text-xs text-zinc-400 truncate">
-                          My Tailor Swift
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="mt-1 text-xs text-zinc-400">Idle</div>
+                </div>
+                {/* Moved this div outside of the relative container for proper layout */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-sm text-white">
+                      {user.fullName}
+                    </span>
+                    {isPlaying && (
+                      <Music className="size-3.5 text-emerald-400 shrink-0" />
                     )}
                   </div>
+                  {isPlaying ? (
+                    <div className="mt-1">
+                      <div className="mt-1 text-sm text-white font-medium truncate">
+                        Cardigan
+                      </div>
+                      <div className="text-xs text-zinc-400 truncate">
+                        My Tailor Swift
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-1 text-xs text-zinc-400">Idle</div>
+                  )}
                 </div>
               </div>
             </div>
