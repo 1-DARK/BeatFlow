@@ -1,7 +1,13 @@
-import React from "react";
+import type { Song } from "@/types";
 
-const SectionGrid = () => {
-  return <div></div>;
+type SectionGridProps = {
+  title: string;
+  songs: Song[];
+  isLoading: boolean;
+};
+
+const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
+  if (isLoading) return <div></div>;
 };
 
 export default SectionGrid;
