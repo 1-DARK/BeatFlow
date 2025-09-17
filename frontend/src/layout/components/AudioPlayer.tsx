@@ -20,6 +20,17 @@ const AudioPlayer = () => {
       audio?.removeEventListener("ended", handleEnded);
     };
   }, [playNext]);
+  useEffect(() => {
+    if (!audioRef.current || !currentSong) return;
+    const audio = audioRef.current;
+    const isSongChange = prevSongRef.current !== currentSong?.audioUrl;
+    if (isSongChange) {
+      audio.src = currentSong?.audioUrl;
+      audio.currentTime = 0;
+      prevSongRef.current = currentSong?.audioUrl;
+      if (isPlaying) audio.play();
+    }
+  }, [currentSong, isPlaying]);
   return <audio ref={audioRef} />;
 };
 
