@@ -1,4 +1,5 @@
 import type { Song } from "@/types";
+import { Currency } from "lucide-react";
 import { create } from "zustand";
 
 interface PlayerStore {
@@ -56,10 +57,25 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       const nextSong = queue[nextIndex];
       set({
         currentSong: nextSong,
-        currentIndex:nextIndex
+        currentIndex: nextIndex,
         isPlaying: true,
       });
+    } else {
+      set({ isPlaying: false });
     }
   },
-  playPrevious: () => {},
+  playPrevious: () => {
+    const { currentIndex, queue } = get();
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      const prevSong = queue[prevIndex];
+      set({
+        currentSong: prevSong,
+        currentIndex: prevIndex,
+        isPlaying: true,
+      });
+    } else {
+      set({ isPlaying: false });
+    }
+  },
 }));
