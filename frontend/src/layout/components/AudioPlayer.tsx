@@ -9,42 +9,52 @@ const AudioPlayer = () => {
 
   // handle play/pause logic
   useEffect(() => {
-    if (isPlaying) audioRef.current?.play();
-    else audioRef.current?.pause();
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio
+        .play()
+        .catch((err) => console.warn("Autoplay blocked or error:", err));
+    } else {
+      audio.pause();
+    }
   }, [isPlaying]);
 
   // handle song ends
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio) return;
 
-    const handleEnded = () => {
-      playNext();
+    const handleEnded = () => playNext();
+
+    audio.addEventListener("ended", handleEnded);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
     };
-
-    audio?.addEventListener("ended", handleEnded);
-
-    return () => audio?.removeEventListener("ended", handleEnded);
   }, [playNext]);
 
   // handle song changes
   useEffect(() => {
-    if (!audioRef.current || !currentSong) return;
-
     const audio = audioRef.current;
+    if (!audio || !currentSong) return;
 
-    // check if this is actually a new song
-    const isSongChange = prevSongRef.current !== currentSong?.audioUrl;
+    const isSongChange = prevSongRef.current !== currentSong.audioUrl;
+
     if (isSongChange) {
-      audio.src = currentSong?.audioUrl;
-      // reset the playback position
+      audio.src = currentSong.audioUrl;
       audio.currentTime = 0;
+      prevSongRef.current = currentSong.audioUrl;
 
-      prevSongRef.current = currentSong?.audioUrl;
-
-      if (isPlaying) audio.play();
+      if (isPlaying) {
+        audio
+          .play()
+          .catch((err) => console.warn("Autoplay blocked or error:", err));
+      }
     }
   }, [currentSong, isPlaying]);
 
   return <audio ref={audioRef} />;
 };
+
 export default AudioPlayer;

@@ -1,5 +1,4 @@
 import type { Song } from "@/types";
-import { Currency } from "lucide-react";
 import { create } from "zustand";
 
 interface PlayerStore {
