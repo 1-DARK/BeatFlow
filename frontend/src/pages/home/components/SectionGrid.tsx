@@ -1,16 +1,16 @@
 import type { Song } from "@/types";
 import SectionGridSkeleton from "./SectionGridSkeleton";
 import { Button } from "@/components/ui/button";
-import PlayButton from "./PlayButton ";
+import PlayButton from "./PlayButton";
 
 type SectionGridProps = {
   title: string;
   songs: Song[];
   isLoading: boolean;
 };
-
-const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
+const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
   if (isLoading) return <SectionGridSkeleton />;
+
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
@@ -22,7 +22,8 @@ const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
           Show all
         </Button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {songs.map((song) => (
           <div
             key={song._id}
@@ -33,7 +34,8 @@ const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
                 <img
                   src={song.imageUrl}
                   alt={song.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 
+									group-hover:scale-105"
                 />
               </div>
               <PlayButton song={song} />
@@ -46,5 +48,4 @@ const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
     </div>
   );
 };
-
 export default SectionGrid;
