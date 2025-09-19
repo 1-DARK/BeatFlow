@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/lib/axios";
 import type { Album, Song } from "@/types";
+
 import { create } from "zustand";
 
 interface MusicStore {
@@ -11,15 +12,15 @@ interface MusicStore {
   featuredSongs: Song[];
   madeForYouSongs: Song[];
   trendingSongs: Song[];
+
   fetchAlbums: () => Promise<void>;
-  fetchAlbumById: (id: String) => Promise<void>;
-  fetchFeaturedSongs: (id: String) => Promise<void>;
-  fetchMadeForYouSongs: (id: String) => Promise<void>;
-  fetchTrendingSongs: (id: String) => Promise<void>;
+  fetchAlbumById: (id: string) => Promise<void>;
+  fetchFeaturedSongs: () => Promise<void>;
+  fetchMadeForYouSongs: () => Promise<void>;
+  fetchTrendingSongs: () => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
-  // MusicStore as a interface
   albums: [],
   songs: [],
   isLoading: false,
@@ -30,21 +31,18 @@ export const useMusicStore = create<MusicStore>((set) => ({
   trendingSongs: [],
 
   fetchAlbums: async () => {
-    set({
-      isLoading: true,
-      error: null,
-    });
+    set({ isLoading: true, error: null });
+
     try {
       const response = await axiosInstance.get("/albums");
-      set({
-        albums: response.data,
-      });
+      set({ albums: response.data });
     } catch (error: any) {
       set({ error: error.response.data.message });
     } finally {
       set({ isLoading: false });
     }
   },
+
   fetchAlbumById: async (id) => {
     set({ isLoading: true, error: null });
     try {
@@ -56,6 +54,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
       set({ isLoading: false });
     }
   },
+
   fetchFeaturedSongs: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -67,6 +66,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
       set({ isLoading: false });
     }
   },
+
   fetchMadeForYouSongs: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -78,6 +78,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
       set({ isLoading: false });
     }
   },
+
   fetchTrendingSongs: async () => {
     set({ isLoading: true, error: null });
     try {
