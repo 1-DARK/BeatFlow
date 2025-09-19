@@ -9,51 +9,66 @@ const AudioPlayer = () => {
 
   // handle play/pause logic
   useEffect(() => {
-    if (isPlaying) audioRef.current?.play();
-    else audioRef.current?.pause();
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.play().catch((err) => {
+        // Ignore AbortError (caused by quick pause/play toggles)
+        if (err.name !== "AbortError") {
+          console.error("Playback failed:", err);
+        }
+      });
+    } else {
+      audio.pause();
+    }
   }, [isPlaying]);
 
   // handle song ends
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio) return;
 
     const handleEnded = () => {
       playNext();
     };
 
-    audio?.addEventListener("ended", handleEnded);
-
-    return () => audio?.removeEventListener("ended", handleEnded);
+    audio.addEventListener("ended", handleEnded);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
   }, [playNext]);
+
   // handle song changes
   useEffect(() => {
-    if (!audioRef.current || !currentSong) return;
-
     const audio = audioRef.current;
+    if (!audio || !currentSong?.audioUrl) return;
 
-    // check if this is actually a new song
-    const isSongChange = prevSongRef.current !== currentSong?.audioUrl;
+    const isSongChange = prevSongRef.current !== currentSong.audioUrl;
+
     if (isSongChange) {
-      audio.src = currentSong?.audioUrl;
-      // reset the playback position
+      console.log("Loading audio:", currentSong.audioUrl);
+
+      audio.src = currentSong.audioUrl;
+      audio.load(); // ensure fresh load
       audio.currentTime = 0;
 
-      prevSongRef.current = currentSong?.audioUrl;
+      prevSongRef.current = currentSong.audioUrl;
 
-      // Add an event listener to wait for the audio to load before playing
-      const handleCanPlayThrough = () => {
-        if (isPlaying) audio.play();
-      };
-
-      audio.addEventListener("canplaythrough", handleCanPlayThrough);
-
-      // Clean up the event listener when the component unmounts or the effect reruns
-      return () => {
-        audio.removeEventListener("canplaythrough", handleCanPlayThrough);
+      audio.onloadedmetadata = () => {
+        if (isPlaying) {
+          audio.play().catch((err) => {
+            // Ignore AbortError here as well
+            if (err.name !== "AbortError") {
+              console.error("Playback failed after load:", err);
+            }
+          });
+        }
       };
     }
   }, [currentSong, isPlaying]);
 
   return <audio ref={audioRef} />;
 };
+
 export default AudioPlayer;
