@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionGrid from "./components/SectionGrid";
 
 import { useMusicStore } from "@/store/useMusicStore";
+import { usePlayerStore } from "@/store/usePlayerStore";
 
 const HomePage = () => {
   const {
@@ -17,7 +18,7 @@ const HomePage = () => {
 
     trendingSongs,
   } = useMusicStore();
-
+  const { initializeQueue } = usePlayerStore();
   useEffect(() => {
     fetchFeaturedSongs();
     fetchMadeForYouSongs();
