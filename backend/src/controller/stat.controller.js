@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js";
 
 export const getStats = async (req, res, next) => {
   try {
-    const [totalSongs, totalUsers, totalAlbums, uniqueArtists] =
+    const [totalSongs, totalAlbums, totalUsers, uniqueArtists] =
       await Promise.all([
         Song.countDocuments(),
         Album.countDocuments(),
