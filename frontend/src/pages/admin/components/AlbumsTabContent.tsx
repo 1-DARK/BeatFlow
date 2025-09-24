@@ -1,19 +1,36 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Album } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Music, Plus } from "lucide-react";
+import AlbumTable from "./AlbumTable";
 
-const AlbumsTabContent = () => {
+const AlbumTabContent = () => {
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="flex items-center gap-2">
-              <Album className="h-5 w-5 text-emerald-500 " />
+              <Music className="size-5 text-emerald-500 " />
+              Album Library
             </CardTitle>
+            <CardDescription>Manage Your Album Tracks</CardDescription>
           </div>
+          <Button>
+            <Plus className="text-black" />
+          </Button>
         </div>
       </CardHeader>
+      <CardContent>
+        <AlbumTable />
+      </CardContent>
     </Card>
   );
 };
-export default AlbumsTabContent;
+
+export default AlbumTabContent;
