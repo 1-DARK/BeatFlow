@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Music } from "lucide-react";
+import { Library } from "lucide-react";
 import AlbumTable from "./AlbumTable";
 import AddAlbumDialog from "./AddAlbumDialog";
 
@@ -16,7 +16,7 @@ const AlbumTabContent = () => {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="flex items-center gap-2">
-              <Music className="size-5 text-emerald-500 " />
+              <Library className="size-5 text-violet-500" />
               Album Library
             </CardTitle>
             <CardDescription>Manage Your Album Tracks</CardDescription>

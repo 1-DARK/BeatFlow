@@ -21,16 +21,21 @@ import { useMusicStore } from "@/store/useMusicStore";
 import { Plus, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-
+interface NewSong {
+  title: string;
+  artist: string;
+  album: string;
+  duration: string;
+}
 const AddSongDialog = () => {
   const { albums } = useMusicStore();
   const [songDialogOpen, setSongDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [newSong, setNewSong] = useState({
+  const [newSong, setNewSong] = useState<NewSong>({
     title: "",
     artist: "",
     album: "",
-    duration: 0,
+    duration: "0",
   });
   const [files, setFiles] = useState<{
     audio: File | null;
@@ -65,14 +70,18 @@ const AddSongDialog = () => {
         title: "",
         artist: "",
         album: "",
-        duration: 0,
+        duration: "0",
       });
       setFiles({
         audio: null,
         image: null,
       });
       toast.success("Song added successfully");
-    } catch (error: any) {}
+    } catch (error: any) {
+      toast.error("Failed to add song:" + error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
@@ -158,6 +167,7 @@ const AddSongDialog = () => {
             <label className="text-sm font-medium">Title</label>
             <Input
               value={newSong.title}
+              placeholder="Enter title"
               onChange={(e) =>
                 setNewSong({ ...newSong, title: e.target.value })
               }
@@ -168,6 +178,7 @@ const AddSongDialog = () => {
             <label className="text-sm font-medium">Artist</label>
             <Input
               value={newSong.artist}
+              placeholder="Enter artist name"
               onChange={(e) =>
                 setNewSong({ ...newSong, artist: e.target.value })
               }
@@ -184,7 +195,7 @@ const AddSongDialog = () => {
               onChange={(e) =>
                 setNewSong({
                   ...newSong,
-                  duration: parseInt(e.target.value) || 0,
+                  duration: e.target.value || "0",
                 })
               }
               className="bg-zinc-800 border-zinc-700"
@@ -222,7 +233,11 @@ const AddSongDialog = () => {
           >
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={isLoading}>
+          <Button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="text-black"
+          >
             {isLoading ? "Uploading..." : "Add Song"}
           </Button>
         </DialogFooter>
