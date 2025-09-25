@@ -18,7 +18,6 @@ interface NewSong {
   title: string;
   artist: string;
   album: string;
-  duration: string;
 }
 const AddAlbumDialog = () => {
   const { albums } = useMusicStore();
@@ -28,7 +27,6 @@ const AddAlbumDialog = () => {
     title: "",
     artist: "",
     album: "",
-    duration: "0",
   });
   const [files, setFiles] = useState<{
     image: File | null;
@@ -41,7 +39,7 @@ const AddAlbumDialog = () => {
     setIsLoading(true);
     try {
       if (!files.image) {
-        return toast.error("Please upload both audio and image files");
+        return toast.error("Please upload  image files");
       }
       const formData = new FormData();
       formData.append("title", newSong.title);
@@ -56,14 +54,13 @@ const AddAlbumDialog = () => {
         title: "",
         artist: "",
         album: "",
-        duration: "0",
       });
       setFiles({
         image: null,
       });
-      toast.success("Song added successfully");
+      toast.success("Album added successfully");
     } catch (error: any) {
-      toast.error("Failed to add song:" + error.message);
+      toast.error("Failed to add album:" + error.message);
     } finally {
       setIsLoading(false);
     }
