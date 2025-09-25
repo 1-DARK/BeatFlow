@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -38,7 +39,9 @@ const AddSongDialog = () => {
   });
   const audioInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const handleSumbit = async () => {};
+  const handleSubmit = async () => {
+    setIsLoading(true);
+  };
   return (
     <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
       <DialogTrigger asChild>
@@ -178,6 +181,19 @@ const AddSongDialog = () => {
             </Select>
           </div>
         </div>
+
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => setSongDialogOpen(false)}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} disabled={isLoading}>
+            {isLoading ? "Uploading..." : "Add Song"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
