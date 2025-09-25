@@ -14,19 +14,19 @@ import { useMusicStore } from "@/store/useMusicStore";
 import { Plus, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-interface NewSong {
+interface NewAlbum {
   title: string;
   artist: string;
-  album: string;
+  releaseyear: string;
 }
 const AddAlbumDialog = () => {
   const { albums } = useMusicStore();
-  const [songDialogOpen, setSongDialogOpen] = useState(false);
+  const [albumDialogOpen, setalbumDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [newSong, setNewSong] = useState<NewSong>({
+  const [newAlbum, setNewAlbum] = useState<NewAlbum>({
     title: "",
     artist: "",
-    album: "",
+    releaseyear: "",
   });
   const [files, setFiles] = useState<{
     image: File | null;
@@ -42,18 +42,18 @@ const AddAlbumDialog = () => {
         return toast.error("Please upload  image files");
       }
       const formData = new FormData();
-      formData.append("title", newSong.title);
-      formData.append("artist", newSong.artist);
+      formData.append("title", newAlbum.title);
+      formData.append("artist", newAlbum.artist);
       formData.append("imageFile", files.image);
-      await axiosInstance.post("/admin/songs", formData, {
+      await axiosInstance.post("/admin/albums", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      setNewSong({
+      setNewAlbum({
         title: "",
         artist: "",
-        album: "",
+        releaseyear: "",
       });
       setFiles({
         image: null,
@@ -66,7 +66,7 @@ const AddAlbumDialog = () => {
     }
   };
   return (
-    <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
+    <Dialog open={albumDialogOpen} onOpenChange={setalbumDialogOpen}>
       <DialogTrigger asChild>
         <Button className="bg-violet-500 hover:bg-violet-600 text-black">
           <Plus className="mr-2 h-4 w-4" />
@@ -125,9 +125,9 @@ const AddAlbumDialog = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium">Album Title</label>
             <Input
-              value={newSong.title}
+              value={newAlbum.title}
               onChange={(e) =>
-                setNewSong({ ...newSong, title: e.target.value })
+                setNewAlbum({ ...newAlbum, title: e.target.value })
               }
               placeholder="Enter album title"
               className="bg-zinc-800 border-zinc-700"
@@ -136,9 +136,9 @@ const AddAlbumDialog = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium">Artist</label>
             <Input
-              value={newSong.artist}
+              value={newAlbum.artist}
               onChange={(e) =>
-                setNewSong({ ...newSong, artist: e.target.value })
+                setNewAlbum({ ...newAlbum, artist: e.target.value })
               }
               placeholder="Enter artist name"
               className="bg-zinc-800 border-zinc-700"
@@ -154,7 +154,7 @@ const AddAlbumDialog = () => {
         <DialogFooter>
           <Button
             variant="outline"
-            onClick={() => setSongDialogOpen(false)}
+            onClick={() => setalbumDialogOpen(false)}
             disabled={isLoading}
           >
             Cancel

@@ -1,6 +1,6 @@
 import Topbar from "@/components/Topbar";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FeaturedSection from "./components/FeaturedSection";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionGrid from "./components/SectionGrid";
@@ -9,6 +9,29 @@ import { useMusicStore } from "@/store/useMusicStore";
 import { usePlayerStore } from "@/store/usePlayerStore";
 
 const HomePage = () => {
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    // India timezone
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      hour: "numeric",
+      hour12: false,
+      timeZone: "Asia/Kolkata", // India Standard Time
+    };
+
+    const hour = parseInt(
+      new Intl.DateTimeFormat("en-US", options).format(now),
+      10
+    );
+    if (hour < 12) {
+      setGreeting("Good Morning");
+    } else if (hour < 18) {
+      setGreeting("Good Afternoon");
+    } else {
+      setGreeting("Good Evening");
+    }
+  }, []);
   const {
     fetchFeaturedSongs,
     fetchMadeForYouSongs,
@@ -39,9 +62,7 @@ const HomePage = () => {
       <Topbar />
       <ScrollArea className="h-[calc(100vh-180px)]">
         <div className="p-4 sm:p-6">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-6">
-            Good afternoon
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-6">{greeting}</h1>
           <FeaturedSection />
 
           <div className="space-y-8">
