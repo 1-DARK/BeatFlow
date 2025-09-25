@@ -8,24 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useMusicStore } from "@/store/useMusicStore";
-import { Calendar, Trash2 } from "lucide-react";
+import { Calendar, Music, Trash2 } from "lucide-react";
+import { useEffect } from "react";
 
 const AlbumTable = () => {
-  const { albums, isLoading, error, deleteAlbum } = useMusicStore();
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <div className="text-zinc-400">Loading Albums...</div>
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <div className="text-red-400">{error}</div>
-      </div>
-    );
-  }
+  const { albums, deleteAlbum, fetchAlbums } = useMusicStore();
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
+
   return (
     <Table>
       <TableHeader>
@@ -34,6 +25,7 @@ const AlbumTable = () => {
           <TableHead>Title</TableHead>
           <TableHead>Artist</TableHead>
           <TableHead>Release Date</TableHead>
+          <TableHead>Songs</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -50,10 +42,17 @@ const AlbumTable = () => {
 
             <TableCell className="font-medium">{album.title}</TableCell>
             <TableCell>{album.artist}</TableCell>
+
             <TableCell>
               <span className="inline-flex items-center gap-1 text-zinc-400">
                 <Calendar className="h-4 w-4" />
                 {album.releaseYear}
+              </span>
+            </TableCell>
+            <TableCell>
+              <span className="inline-flex items-center gap-1 text-zinc-400">
+                <Music className="h-4 w-4" />
+                {album.songs.length} songs
               </span>
             </TableCell>
             <TableCell className="text-right">
