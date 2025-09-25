@@ -5,7 +5,7 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
 
-const AddSongDialog = () => {
+const AddAlbumDialog = () => {
   const { albums } = useMusicStore();
   const [songDialogOpen, setSongDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,11 +30,11 @@ const AddSongDialog = () => {
       <DialogTrigger asChild>
         <Button className="bg-emerald-500 hover:bg-emerald-600 text-black">
           <Plus className="mr-2 h-4 w-4" />
-          Add Songs
+          Add Albums
         </Button>
       </DialogTrigger>
     </Dialog>
   );
 };
 
-export default AddSongDialog;
+export default AddAlbumDialog;
