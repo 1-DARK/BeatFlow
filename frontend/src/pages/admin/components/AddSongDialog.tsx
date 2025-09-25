@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useMusicStore } from "@/store/useMusicStore";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -33,6 +39,14 @@ const AddSongDialog = () => {
           Add Songs
         </Button>
       </DialogTrigger>
+      <DialogContent className="bg-zinc-900 border-zinc-700 max-h-[80vh] overflow-auto">
+        <DialogHeader>
+          <DialogTitle>Add new Song</DialogTitle>
+          <DialogDescription>
+            Add a new song to your music library
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
     </Dialog>
   );
 };
