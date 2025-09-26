@@ -47,6 +47,15 @@ export const initializeSocket = (server) => {
       let disconnectedUserId;
       for (const [userId, socketId] of userSockets.entries()) {
         // find disconnected users
+        if (socketId === socket.id) {
+          disconnectedUserId = userId;
+          userSockets.delete(userId);
+          userActivities.delete(userId);
+          break;
+        }
+      }
+      if (disconnectedUserId) {
+        io.emit("user_disconnected", disconnectedUserId);
       }
     });
   });
