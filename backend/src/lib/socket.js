@@ -16,6 +16,38 @@ export const initializeSocket = (server) => {
       userActivities.set(userId, "Idle");
       // broadcasts to all connected sockets that this user just logged in
       io.emit("user_connected", userId);
+      socket.emit("users_online", Array.from(userSockets.keys()));
+      io.emit("activities", Array.from(userActivities.entries()));
+    });
+    socket.on("update_activity", ({ userId, activity }) => {
+      console.log("activity_updated", userId, activity);
+      userActivities.set(userId, activity);
+      io.emit("activity_updated", { userId, activity });
+    });
+    socket.on("send_message", async (data) => {
+      try {
+        const { senderId, receiverId, content } = data;
+        const message = await Message.create({
+          senderId,
+          receiverId,
+          content,
+        });
+        // send to receiver in realtime, if they're online
+        const receiverSocketId = userSockets.get(receiverId);
+        if (receiverSocketId) {
+          io.to(receiverId).emit("receive_message", message);
+        }
+        socket.emit("message_sent", message);
+      } catch (error) {
+        console.log("Message error:", error);
+        socket.emit("message_error", error.message);
+      }
+    });
+    socket.on("disconnect", () => {
+      let disconnectedUserId;
+      for (const [userId, socketId] of userSockets.entries()) {
+        // find disconnected users
+      }
     });
   });
 };
