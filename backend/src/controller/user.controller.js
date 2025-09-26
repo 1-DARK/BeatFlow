@@ -10,3 +10,15 @@ export const getAllUsers = async (req, res, next) => {
     next(error);
   }
 };
+export const getMessages = async (req, res, next) => {
+  try {
+    const myId = req.auth.userId;
+    const { userId } = req.params;
+    const messages = await Message.find({
+      $or: [
+        { senderId: userId, receiverId: myId },
+        { senderId: myId, receiverId: userId },
+      ],
+    });
+  } catch (error) {}
+};
