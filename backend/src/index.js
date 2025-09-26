@@ -13,6 +13,7 @@ import albumRoutes from "./routes/album.route.js";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
 import { createServer } from "http";
+import { initializeSocket } from "./lib/socket.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;

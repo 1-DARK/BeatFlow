@@ -19,6 +19,9 @@ export const getMessages = async (req, res, next) => {
         { senderId: userId, receiverId: myId },
         { senderId: myId, receiverId: userId },
       ],
-    });
-  } catch (error) {}
+    }).sort({ createdAt: 1 });
+    req.status(200).json(messages);
+  } catch (error) {
+    next(error);
+  }
 };
