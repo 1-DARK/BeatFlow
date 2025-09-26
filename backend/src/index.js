@@ -12,9 +12,12 @@ import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
+import { createServer } from "http";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const httpServer = createServer(app);
+initializeSocket(httpServer);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(
@@ -49,7 +52,7 @@ app.use((err, req, res, next) => {
         : err.message,
   });
 });
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   connectDB();
   console.log("Server started at http://localhost:" + PORT);
 });
