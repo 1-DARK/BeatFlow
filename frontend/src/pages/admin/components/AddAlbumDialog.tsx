@@ -92,15 +92,28 @@ const AddAlbumDialog = () => {
             onClick={() => fileInputRef.current?.click()}
           >
             <div className="text-center">
-              <div className="p-3 bg-zinc-800 rounded-full inline-block mb-2">
-                <Upload className="h-6 w-6 text-zinc-400" />
-              </div>
-              <div className="text-sm text-zinc-400 mb-2">
-                {imageFile ? imageFile.name : "Upload album artwork"}
-              </div>
-              <Button variant="outline" size="sm" className="text-xs">
-                Choose File
-              </Button>
+              {imageFile ? (
+                <div className="space-y-2">
+                  <div className="text-sm text-emerald-500">
+                    Image selected:
+                  </div>
+                  <div className="text-xs text-zinc-400">
+                    {imageFile.name.slice(0, 20)}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="p-3 bg-zinc-800 rounded-full inline-block mb-2">
+                    <Upload className="h-6 w-6 text-zinc-400" />
+                  </div>
+                  <div className="text-sm text-zinc-400 mb-2">
+                    Upload artwork
+                  </div>
+                  <Button variant="outline" size="sm" className="text-xs">
+                    Choose File
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           <div className="space-y-2">
