@@ -12,12 +12,21 @@ interface ChatStore {
   userActivities: Map<string, string>;
   messages: Message[];
   fetchUsers: () => Promise<void>;
+  initSocket: (userId: string) => void;
+  disconnectSocket: () => void;
+  sendMessage: (receiverId: string, senderId: string, content: string) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
   users: [],
   isLoading: false,
   error: null,
+  socket: null,
+  isConnected: false,
+  onlineUsers: new Set(),
+  userActivities: new Map(),
+  messages: [],
+
   fetchUsers: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -29,4 +38,7 @@ export const useChatStore = create<ChatStore>((set) => ({
       set({ isLoading: false });
     }
   },
+  initSocket: (userId: string) => {},
+  disconnectSocket: () => {},
+  sendMessage: (receiverId, senderId, content) => {},
 }));
