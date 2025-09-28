@@ -1,9 +1,9 @@
 import { axiosInstance } from "@/lib/axios";
-import type { Message } from "@/types";
+import type { Message, User } from "@/types";
 import { create } from "zustand";
 import { io } from "socket.io-client";
 interface ChatStore {
-  users: any[];
+  users: User[];
   isLoading: boolean;
   error: string | null;
   socket: any;
@@ -11,11 +11,14 @@ interface ChatStore {
   onlineUsers: Set<string>;
   userActivities: Map<string, string>;
   messages: Message[];
+  selectedUser: User | null;
+
   fetchUsers: () => Promise<void>;
   initSocket: (userId: string) => void;
   disconnectSocket: () => void;
   sendMessage: (receiverId: string, senderId: string, content: string) => void;
   fetchMessages: (userId: string) => Promise<void>;
+  setSelectedUser: (user: User | null) => void;
 }
 
 const baseURL = "http://localhost:5001";
@@ -34,7 +37,8 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   onlineUsers: new Set(),
   userActivities: new Map(),
   messages: [],
-
+  selectedUser: null,
+  setSelectedUser: (user) => set({ selectedUser: user }),
   fetchUsers: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -52,7 +56,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       socket.connect(); // connect with socket server
       socket.emit("user_connected", userId);
 
-      socket.on("user_online", (users: string[]) => {
+      socket.on("users_online", (users: string[]) => {
         set({ onlineUsers: new Set(users) });
       });
 
