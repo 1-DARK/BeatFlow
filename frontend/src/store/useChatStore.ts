@@ -1,11 +1,17 @@
 import { axiosInstance } from "@/lib/axios";
+import type { Message } from "@/types";
 import { create } from "zustand";
 
 interface ChatStore {
   users: any[];
-  fetchUsers: () => Promise<void>;
   isLoading: boolean;
   error: string | null;
+  socket: any;
+  isConnected: boolean;
+  onlineUsers: Set<string>;
+  userActivities: Map<string, string>;
+  messages: Message[];
+  fetchUsers: () => Promise<void>;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
