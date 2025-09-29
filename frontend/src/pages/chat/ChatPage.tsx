@@ -50,7 +50,7 @@ const ChatPage = () => {
                       </Avatar>
                       <div
                         className={`rounded-lg p-3 max-w-[70%]
-													${message.senderId === user?.id ? "bg-green-500" : "bg-zinc-800"}
+													${message.senderId === user?.id ? "bg-green-900" : "bg-zinc-800"}
 												`}
                       >
                         <p className="text-sm">{message.content}</p>
