@@ -3,6 +3,7 @@ import { useChatStore } from "@/store/useChatStore";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import UserList from "./components/UserList";
+import ChatHeader from "./components/ChatHeader";
 
 const ChatPage = () => {
   const { user } = useUser();
@@ -23,7 +24,9 @@ const ChatPage = () => {
         {/*  chat message     */}
         <div className="flex flex-col h-full">
           {selectedUser ? (
-            "Selected User existed"
+            <>
+              <ChatHeader />
+            </>
           ) : (
             <NoConversationPlaceholder />
           )}
