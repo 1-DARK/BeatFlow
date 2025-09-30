@@ -94,6 +94,13 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       });
     } else {
       set({ isPlaying: false });
+      const socket = useChatStore.getState().socket;
+      if (socket.auth) {
+        socket.emit("update_activity", {
+          userId: socket.auth.userId,
+          activity: `Idle`,
+        });
+      }
     }
   },
   playPrevious: () => {
@@ -115,6 +122,13 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       });
     } else {
       set({ isPlaying: false });
+      const socket = useChatStore.getState().socket;
+      if (socket.auth) {
+        socket.emit("update_activity", {
+          userId: socket.auth.userId,
+          activity: `Idle`,
+        });
+      }
     }
   },
 }));
