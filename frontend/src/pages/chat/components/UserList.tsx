@@ -42,7 +42,7 @@ const UserList = () => {
                     />
                   </div>
                   <div className="flex-1 min-w-0 lg:block hidden">
-                    <span className="font-medium truncate">
+                    <span className="font-medium text-sm truncate">
                       {user.fullName}
                     </span>
                   </div>
