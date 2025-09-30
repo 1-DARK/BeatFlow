@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import { clerkMiddleware } from "@clerk/express";
 import fileUpload from "express-fileupload";
 import path from "path";
-import { fileURLToPath } from "url";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -17,12 +16,12 @@ import { initializeSocket } from "./lib/socket.js";
 import cron from "node-cron";
 import fs from "fs";
 dotenv.config();
+const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const httpServer = createServer(app);
 initializeSocket(httpServer);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -81,7 +80,7 @@ app.use((err, req, res, next) => {
 });
 httpServer.listen(PORT, () => {
   connectDB();
-  console.log("Server started at http://localhost:" + PORT);
+  console.log("Server is running on port" + PORT);
 });
 
 // socketio implementation
