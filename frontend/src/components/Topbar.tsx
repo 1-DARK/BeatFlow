@@ -15,9 +15,13 @@ const Topbar = () => {
       backdrop-blur-md z-10
     "
     >
-      <div className="flex gap-2 items-center">
-        <img src="/spotify.png" className="size-8" alt="Spotify logo" />
-        Musify
+      <div className="flex gap-2 items-center ">
+        <img
+          src="/BeatFlow.png"
+          className="size-8 rounded-3xl"
+          alt="BeatFlow logo"
+        />
+        BeatFlow
       </div>
       <div className="flex items-center gap-4">
         {isAdmin && (
