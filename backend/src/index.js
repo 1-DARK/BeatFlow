@@ -44,15 +44,16 @@ app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
 
-// error handler
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    message:
-      process.env.NODE_ENV === "production"
-        ? "Internal Server Error"
-        : err.message,
+if (process.env.NODE_ENV === "production")
+  // error handler
+  app.use((err, req, res, next) => {
+    res.status(500).json({
+      message:
+        process.env.NODE_ENV === "production"
+          ? "Internal Server Error"
+          : err.message,
+    });
   });
-});
 httpServer.listen(PORT, () => {
   connectDB();
   console.log("Server started at http://localhost:" + PORT);
