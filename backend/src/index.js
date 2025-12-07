@@ -24,7 +24,7 @@ initializeSocket(httpServer);
 
 app.use(
   cors({
-    origin: "https://beat-flow-r306.onrender.com",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
