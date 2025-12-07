@@ -4,7 +4,7 @@ import { Message } from "../models/message.model.js";
 export const initializeSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "https://beat-flow-r306.onrender.com",
+      origin: process.env.FRONTEND_URL,
       credentials: true,
     },
   });
