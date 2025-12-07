@@ -24,10 +24,11 @@ initializeSocket(httpServer);
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(clerkMiddleware()); // this will add auth to req object =>req.auth.userId
 app.use(

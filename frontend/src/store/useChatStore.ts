@@ -29,8 +29,11 @@ const baseURL =
     : import.meta.env.VITE_API_URL;
 
 const socket = io(baseURL, {
-  autoConnect: false, // only connect if user is authenticated
+  autoConnect: false,
   withCredentials: true,
+  transports: ["websocket", "polling"], //  REQUIRED ON RENDER
+  reconnectionAttempts: 5, //  stability
+  timeout: 20000, //  prevent instant close
 });
 
 export const useChatStore = create<ChatStore>((set, get) => ({
