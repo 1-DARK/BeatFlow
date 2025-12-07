@@ -24,7 +24,9 @@ interface ChatStore {
 }
 
 const baseURL =
-  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+  import.meta.env.MODE === "development"
+    ? "https://beat-axwc.onrender.com"
+    : "/";
 
 const socket = io(baseURL, {
   autoConnect: false, // only connect if user is authenticated
