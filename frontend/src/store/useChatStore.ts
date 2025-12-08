@@ -26,12 +26,12 @@ interface ChatStore {
 const baseURL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5001"
-    : import.meta.env.SOCKET_URL;
+    : import.meta.env.VITE_SOCKET_URL;
 
 const socket = io(baseURL, {
   autoConnect: false,
   withCredentials: true,
-  transports: ["websocket", "polling"], //  REQUIRED ON RENDER
+  transports: ["websocket", "polling"],
 });
 
 export const useChatStore = create<ChatStore>((set, get) => ({
